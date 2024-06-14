@@ -1,68 +1,90 @@
-# CodeIgniter 4 Application Starter
 
-## What is CodeIgniter?
+## README
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+### Description générale
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+L'application développée est une application web légère utilisant CodeIgniter 4, avec AdminLTE pour l'interface utilisateur et SQLite pour la gestion des données. Les fonctionnalités actuellement en place incluent :
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+1. **Écran de connexion :**
+   - Les utilisateurs peuvent se connecter via un formulaire de connexion sécurisé.
+   - L'authentification vérifie les informations d'identification contre la base de données SQLite.
+   - Les sessions sont utilisées pour maintenir l'état de connexion de l'utilisateur.
+   - Si un utilisateur est connecté, il est redirigé vers le dashboard en accédant à la racine du site.
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+2. **Page d'accueil (Dashboard) :**
+   - Une fois authentifié, l'utilisateur est redirigé vers une page d'accueil (dashboard).
+   - L'accès au dashboard est protégé, et les utilisateurs non connectés sont redirigés vers la page de login.
 
-## Installation & updates
+3. **Gestion de la base de données :**
+   - Utilisation de SQLite comme base de données.
+   - Les migrations sont utilisées pour créer les tables nécessaires, y compris l'insertion d'un utilisateur administrateur par défaut.
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+4. **Gestion des utilisateurs :**
+   - Les administrateurs peuvent ajouter, modifier et supprimer des utilisateurs.
+   - Les utilisateurs peuvent avoir un rôle d'administrateur ou d'utilisateur.
+   - Les routes associées à la gestion des utilisateurs sont protégées et accessibles uniquement aux administrateurs.
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+5. **Structure de fichiers et configurations :**
+   - Les fichiers CSS et JS d'AdminLTE sont intégrés et correctement référencés.
+   - Le fichier `.gitignore` est configuré pour exclure `writable/database.sqlite` du suivi Git.
+   - La barre latérale et la barre supérieure sont fixes, seules les sections de contenu changent lors de la navigation.
 
-## Setup
+### Routes configurées
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+- `/` : Redirige vers la page de login si l'utilisateur n'est pas connecté, sinon vers le dashboard.
+- `/login` : Affiche le formulaire de connexion.
+- `/login/authenticate` : Traite les informations de connexion et authentifie l'utilisateur.
+- `/logout` : Déconnecte l'utilisateur.
+- `/dashboard` : Affiche la page d'accueil (dashboard) pour les utilisateurs authentifiés.
+- `/users` : Affiche la liste des utilisateurs pour les administrateurs.
+- `/users/create` : Affiche le formulaire pour ajouter un utilisateur.
+- `/users/store` : Traite les informations pour ajouter un nouvel utilisateur.
+- `/users/edit/(:segment)` : Affiche le formulaire pour modifier un utilisateur existant.
+- `/users/update/(:segment)` : Traite les informations pour mettre à jour un utilisateur existant.
+- `/users/delete/(:segment)` : Supprime un utilisateur existant.
 
-## Important Change with index.php
+### Configuration et inclusion des fichiers
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+- **Layout principal** : `app/Views/layout.php`
+- **Barre latérale** : `app/Views/sidebar.php`
+- **Vues utilisateur** : `app/Views/users/index.php`, `app/Views/users/create.php`, `app/Views/users/edit.php`
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+### Instructions pour démarrer l'application
 
-**Please** read the user guide for a better explanation of how CI4 works!
+1. **Cloner le dépôt :**
+   ```bash
+   git clone <url_du_dépôt>
+   cd <nom_du_dépôt>
+   ```
 
-## Repository Management
+2. **Installer les dépendances :**
+   ```bash
+   composer install
+   npm install
+   ```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+3. **Configurer l'environnement :**
+   - Renommez le fichier `env` en `.env`.
+   - Configurez le fichier `.env` pour activer le mode développement :
+     ```ini
+     CI_ENVIRONMENT = development
+     ```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+4. **Créer la base de données :**
+   - Créez le fichier de base de données SQLite :
+     ```bash
+     touch writable/database.sqlite
+     ```
 
-## Server Requirements
+5. **Exécuter les migrations :**
+   ```bash
+   php spark migrate
+   ```
 
-PHP version 7.4 or higher is required, with the following extensions installed:
+6. **Démarrer le serveur de développement :**
+   ```bash
+   php spark serve
+   ```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> The end of life date for PHP 7.4 was November 28, 2022.
-> The end of life date for PHP 8.0 was November 26, 2023.
-> If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> The end of life date for PHP 8.1 will be November 25, 2024.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+7. **Accéder à l'application :**
+   - Ouvrez votre navigateur et accédez à `http://localhost:8080`.
