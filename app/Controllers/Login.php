@@ -8,10 +8,6 @@ class Login extends BaseController
 {
     public function index()
     {
-        if (session()->get('logged_in')) {
-            return redirect()->to('/dashboard');
-        }
-
         return view('login');
     }
 
@@ -24,7 +20,7 @@ class Login extends BaseController
         $user = $model->where('username', $username)->first();
 
         if ($user && password_verify($password, $user['password'])) {
-            session()->set('logged_in', true);
+            session()->set('isLoggedIn', true);
             return redirect()->to('/dashboard');
         } else {
             return redirect()->back()->with('error', 'Invalid login credentials');
