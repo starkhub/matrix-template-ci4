@@ -27,6 +27,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                <?php if($session->get('role') == "admin"){?>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cogs"></i>
@@ -44,6 +45,8 @@
                         </li>
                     </ul>
                 </li>
+                <?php }?>
+
             </ul>
         </nav>
     </div>
