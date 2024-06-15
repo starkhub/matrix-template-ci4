@@ -16,3 +16,5 @@ $routes->post('/users/store', 'UserController::store');
 $routes->get('/users/edit/(:segment)', 'UserController::edit/$1');
 $routes->post('/users/update/(:segment)', 'UserController::update/$1');
 $routes->get('/users/delete/(:segment)', 'UserController::delete/$1');
+$routes->get('upload', 'Upload::index');          // Add this line.
+$routes->post('upload/upload', 'Upload::upload'); // Add this line.
