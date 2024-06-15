@@ -49,7 +49,6 @@ class UserController extends Controller
 
         $data = [
             'username' => $this->request->getPost('username'),
-            'password' => $this->request->getPost('password'),
             'role' => $this->request->getPost('role')
         ];
 

@@ -15,10 +15,6 @@
             <input type="text" name="username" class="form-control" value="<?= $user['username'] ?>" required>
         </div>
         <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" class="form-control" required>
-        </div>
-        <div class="form-group">
             <label for="role">Rôle</label>
             <select name="role" class="form-control">
                 <option value="user" <?= $user['role'] == 'user' ? 'selected' : '' ?>>Utilisateur</option>
