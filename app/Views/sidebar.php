@@ -9,6 +9,11 @@
             </div>
             <div class="info">
                 <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="d-block text-danger mt-2">Se déconnecter</a>
+                <!-- Formulaire de déconnexion caché -->
+                <form id="logout-form" action="<?= base_url('logout') ?>" method="POST" style="display: none;">
+                    <?= csrf_field() ?> <!-- Inclure le jeton CSRF si nécessaire -->
+                </form>
             </div>
         </div>
         <nav class="mt-2">
