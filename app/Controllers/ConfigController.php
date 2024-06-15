@@ -19,6 +19,7 @@ class ConfigController extends Controller
         foreach ($settings as $setting) {
             $data['settings'][$setting['param_name']] = $setting['param_value'];
         }
+        $data['title'] = 'Configuration globale';
 
         return view('config/index', $data);
     }

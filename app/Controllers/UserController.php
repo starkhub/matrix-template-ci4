@@ -11,6 +11,7 @@ class UserController extends Controller
     {
         $model = new UserModel();
         $data['users'] = $model->findAll();
+        $data['title'] = 'Liste utilisateurs';
 
         return view('users/index', $data);
     }
@@ -39,6 +40,7 @@ class UserController extends Controller
     {
         $model = new UserModel();
         $data['user'] = $model->find($id);
+        $data['title'] = 'Modification utilisateur';
 
         return view('users/edit', $data);
     }
