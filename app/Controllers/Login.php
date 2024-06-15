@@ -31,7 +31,7 @@ class Login extends BaseController
             session()->set($sessionData);
             return redirect()->to('/dashboard');
         } else {
-            return redirect()->back()->with('error', 'Invalid login credentials');
+            return redirect()->back()->with('error', 'Identifiants incorrects');
         }
     }
 
