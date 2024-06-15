@@ -11,7 +11,7 @@
                 <img src="<?= base_url($session->get('avatar')) ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block"><?= $session->get('username') ?></a>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="d-block text-danger mt-2">Se déconnecter</a>
                 <!-- Formulaire de déconnexion caché -->
                 <form id="logout-form" action="<?= base_url('logout') ?>" method="POST" style="display: none;">
