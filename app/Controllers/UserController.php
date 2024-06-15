@@ -59,9 +59,16 @@ class UserController extends Controller
             // Générer un nom unique pour le fichier
             $newName = $avatar->getRandomName();
             // Déplacer le fichier vers le répertoire public/uploads/avatars
-            $avatar->move(WRITEPATH . 'uploads/avatars', $newName);
+            $avatar->move(FCPATH  . 'uploads/avatars', $newName);
             // Ajouter le chemin de l'avatar dans les données à mettre à jour
             $data['avatar'] = 'uploads/avatars/' . $newName;
+
+            // Mise à jour avatar en session si nécessaire
+            $session = session();
+            if($session->get('avatar') !== $data['avatar'])
+            {
+                session()->set(['avatar' => $data['avatar']]);
+            }
         }
 
         $model->update($id, $data);

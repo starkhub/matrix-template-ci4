@@ -20,7 +20,15 @@ class Login extends BaseController
         $user = $model->where('username', $username)->first();
 
         if ($user && password_verify($password, $user['password'])) {
-            session()->set('isLoggedIn', true);
+            // Stocker les informations de l'utilisateur dans la session
+            $sessionData = [
+                'user_id' => $user['id'],
+                'username' => $user['username'],
+                'avatar' => $user['avatar'],
+                'role' => $user['role'],
+                'isLoggedIn' => true
+            ];
+            session()->set($sessionData);
             return redirect()->to('/dashboard');
         } else {
             return redirect()->back()->with('error', 'Invalid login credentials');
